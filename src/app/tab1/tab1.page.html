@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Sacar Multiplos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Sacar Multiplos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  @if (cargando) {
+    <ion-progress-bar type="indeterminate"></ion-progress-bar>
+  }
+
+  <ion-card>
+
+    <form autocomplete="off" [formGroup]="myForm" (ngSubmit)="scarMultiplo()">
+      <ion-card-header>
+        <ion-input label="Numero" formControlName="num" label-placement="floating" fill="outline" placeholder="Ingresa un numero"></ion-input>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-button [disabled]="myForm.invalid" type="submit">Procesar</ion-button>
+        <ion-button [disabled]="myForm.invalid || !this.nuevoMulti " (click)="guardarMultiplos()">Guardar</ion-button>
+      </ion-card-content>
+    </form>
+    
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+
+      <ion-list>
+        @for (resultado of resultados; track $index) {
+          <ion-item >
+            <ion-label [ngClass]="resultado.color">{{ resultado.numero }}</ion-label>
+          </ion-item>
+        }
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
