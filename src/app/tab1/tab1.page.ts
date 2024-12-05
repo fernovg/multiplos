@@ -24,6 +24,7 @@ export class Tab1Page {
   })
 
   public resultados: any[] = [];
+  // public numeros: any[] = [];
   nuevoMulti: dMultiplos;
   cargando: boolean = false;
 
@@ -46,7 +47,7 @@ export class Tab1Page {
       };
 
       // buscamos los multiplos del numero ingresado 
-      for (let i = 0; i <= num; i++) {
+      for (let i = 1; i <= num; i++) {
         if (i % 3 === 0) multiples[3].push(i); //se agrega al array correspondiente
         if (i % 5 === 0) multiples[5].push(i);
         if (i % 7 === 0) multiples[7].push(i);
@@ -54,7 +55,7 @@ export class Tab1Page {
 
       // se crea la lista para mostrar al usuario
       for (let i = 0; i <= num; i++) {
-        let colorClass = '';  // por defecto se muestra en negro (o blanco en dark mode)
+        let colorClass;  // por defecto se muestra en negro (o blanco en dark mode)
 
         // verifica los multiplos para asignar el color
         if (multiples[3].includes(i) || multiples[5].includes(i) || multiples[7].includes(i)) {
@@ -77,13 +78,17 @@ export class Tab1Page {
   }
 
   // funciona para crear el formato de guardado en base de datos
-  procesarMultiples(num: number, multiples: {[key: number]: number[]}) {
-
+  procesarMultiples(num: number, multiples: { [key: number]: number[] }) {
+    let numeros: { numeros: number[], } = { numeros: [] };
+    // for para buscar los multiplos
+    for (let i = 1; i <= num; i++) {
+      numeros.numeros.push(i); //guardamos la serie de numeros
+    }
     // metemos los datos al formato que se enviara
     this.nuevoMulti = {
       id: this.fireServices.crearIdDoc(),
       peticion: num,
-      numeros: Array.from({ length: num + 1 }, (_, i) => i).join(', '),
+      numeros: `${numeros.numeros.join(', ')}`,
       multi3: `${num}[3] (${multiples[3].join(', ')})`,
       multi5: `${num}[5] (${multiples[5].join(', ')})`,
       multi7: `${num}[7] (${multiples[7].join(', ')})`
